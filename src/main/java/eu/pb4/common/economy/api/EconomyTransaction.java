@@ -30,14 +30,14 @@ public interface EconomyTransaction {
     EconomyAccount account();
 
     record Simple(boolean isSuccessful, Text message, long finalBalance, long previousBalance, long transactionAmount, EconomyAccount account) implements EconomyTransaction {
-        public EconomyTransaction failure(Text message, long balance, long transactionAmount, EconomyAccount account) {
+        public static EconomyTransaction failure(Text message, long balance, long transactionAmount, EconomyAccount account) {
             return new Simple(false, message, balance, balance, transactionAmount, account);
         }
 
-        public EconomyTransaction success(Text message, long previousBalance, long transactionAmount, EconomyAccount account) {
+        public static EconomyTransaction success(Text message, long previousBalance, long transactionAmount, EconomyAccount account) {
             return success(message, previousBalance + transactionAmount, previousBalance, transactionAmount, account);
         }
-        public EconomyTransaction success(Text message, long finalBalance, long previousBalance, long transactionAmount, EconomyAccount account) {
+        public static EconomyTransaction success(Text message, long finalBalance, long previousBalance, long transactionAmount, EconomyAccount account) {
             return new Simple(true, message, finalBalance, previousBalance, transactionAmount, account);
         }
     }
